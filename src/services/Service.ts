@@ -2,8 +2,12 @@
 /* eslint-disable @typescript-eslint/no-wrapper-object-types */
 import axios from "axios";
 
+// const api = axios.create({
+//   baseURL: import.meta.env.VITE_API_URL
+// });
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL: "https://nutrigo-delivery.onrender.com"
 });
 
 export const cadastrarUsuario = async (
@@ -12,11 +16,13 @@ export const cadastrarUsuario = async (
   setDados: Function,
 ) => {
   const resposta = await api.post(url, dados);
+  console.log(resposta.data)
   setDados(resposta.data);
 };
 
 export const login = async (url: string, dados: Object, setDados: Function) => {
   const resposta = await api.post(url, dados);
+  console.log(resposta.data)
   setDados(resposta.data);
 };
 

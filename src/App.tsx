@@ -7,6 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import { Cadastro } from "./pages/Cadastro"
 import { Home } from "./pages/Home"
 import { Login } from "./pages/Login"
+import Estabelecimentos from "./pages/Estabelecimentos"
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/estabelecimentos" element={<Estabelecimentos />} />
         </Routes>
         <Footer />
       </BrowserRouter>

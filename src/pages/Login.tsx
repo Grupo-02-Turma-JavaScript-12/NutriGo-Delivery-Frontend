@@ -30,6 +30,7 @@ export function Login() {
       ...usuarioLogin,
       [e.target.name]: e.target.value,
     })
+    console.log(usuarioLogin)
   }
 
   function login(e: FormEvent<HTMLFormElement>) {
