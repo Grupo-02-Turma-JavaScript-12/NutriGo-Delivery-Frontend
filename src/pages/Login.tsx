@@ -7,8 +7,8 @@ import {
 } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { ClipLoader } from "react-spinners"
-import { AuthContext } from "../../contexts/AuthContext"
-import type UsuarioLogin from "../../models/UsuarioLogin"
+import { AuthContext } from "../contexts/AuthContext"
+import type UsuarioLogin from "../models/UsuarioLogin"
 
 export function Login() {
   const navigate = useNavigate()

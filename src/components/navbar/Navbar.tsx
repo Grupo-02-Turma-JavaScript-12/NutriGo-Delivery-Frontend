@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-const Navbar = () => {
-  // Estado para controlar qual link está ativo
+export const Navbar = () => {
   const [activeTab, setActiveTab] = useState("Homepage")
 
   const navLinks = [
@@ -18,7 +17,6 @@ const Navbar = () => {
         <img className="w-30" src="/img/logo/logo.png" />
       </div>
 
-      {/* Navigation Links */}
       <nav className="w-full max-w-4xl">
         <ul className="flex items-center justify-between px-8 md:px-16">
           {navLinks.map((link) => (
@@ -36,5 +34,3 @@ const Navbar = () => {
     </header>
   )
 }
-
-export default Navbar
