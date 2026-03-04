@@ -104,6 +104,7 @@ const Produtos = () => {
 
   return (
     <div className="mt-20 min-h-screen bg-gray-50 pb-20">
+      <div className="min-h-130 min-w-full bg-[url('img/banner/bgproduto.png')] bg-cover"></div>
       {/* Categorias - Scroll Horizontal no Mobile */}
       <nav className="no-scrollbar mx-auto flex max-w-6xl justify-center gap-3 overflow-x-auto px-4 py-6">
         {categories.map((item) => (
