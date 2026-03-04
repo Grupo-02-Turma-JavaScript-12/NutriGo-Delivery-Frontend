@@ -1,17 +1,16 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import type Usuario from "../../../models/Usuario";
-import { cadastrarUsuario } from "../../../services/Service";
-import { ToastAlerta } from "../../../util/ToastAlerta";
-import { ClipLoader } from "react-spinners";
-
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
+import { useNavigate } from "react-router-dom"
+import { ClipLoader } from "react-spinners"
+import type Usuario from "../models/Usuario"
+import { cadastrarUsuario } from "../services/Service"
+import { ToastAlerta } from "../util/ToastAlerta"
 
 export function Cadastro() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const [confirmarSenha, setConfirmarSenha] = useState<string>("");
+  const [confirmarSenha, setConfirmarSenha] = useState<string>("")
 
   const [usuario, setUsuario] = useState<Usuario>({
     id: 0,
@@ -19,52 +18,52 @@ export function Cadastro() {
     usuario: "",
     senha: "",
     foto: "",
-  });
+  })
 
   function retornar() {
-    navigate("/");
+    navigate("/")
   }
 
   useEffect(() => {
     if (usuario.id !== 0) {
-      retornar();
+      retornar()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usuario]);
+  }, [usuario])
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuario({
       ...usuario,
       [e.target.name]: e.target.value,
-    });
+    })
   }
 
   function handleConfirmarSenha(e: ChangeEvent<HTMLInputElement>) {
-    setConfirmarSenha(e.target.value);
+    setConfirmarSenha(e.target.value)
   }
 
   async function cadastrarNovoUsuario(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    e.preventDefault()
 
     if (confirmarSenha === usuario.senha && usuario.senha.length >= 8) {
-      setIsLoading(true);
+      setIsLoading(true)
 
       try {
-        await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario);
-        ToastAlerta("Usuário cadastrado com sucesso!", "sucesso");
+        await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario)
+        ToastAlerta("Usuário cadastrado com sucesso!", "sucesso")
       } catch {
-        ToastAlerta("Erro ao cadastrar o usuário!", "erro");
+        ToastAlerta("Erro ao cadastrar o usuário!", "erro")
       }
     } else {
       ToastAlerta(
         "Dados do usuário inconsistentes! Verifique as informações do cadastro.",
         "erro",
-      );
-      setUsuario({ ...usuario, senha: "" });
-      setConfirmarSenha("");
+      )
+      setUsuario({ ...usuario, senha: "" })
+      setConfirmarSenha("")
     }
 
-    setIsLoading(false);
+    setIsLoading(false)
   }
 
   return (
@@ -178,5 +177,5 @@ export function Cadastro() {
         </form>
       </div>
     </>
-  );
+  )
 }
