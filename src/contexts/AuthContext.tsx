@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, type ReactNode } from "react"
 import type UsuarioLogin from "../models/UsuarioLogin"
+import type Usuario from "../models/Usuario"
 import { ToastAlerta } from "../util/ToastAlerta"
 import { login } from "../services/Service"
 
+interface UsuarioComToken extends Usuario {
+  token: string
+}
+
 interface AuthContextProps {
-  usuario: UsuarioLogin
+  usuario: UsuarioComToken
   handleLogout(): void
-  handleLogin(usuario: UsuarioLogin): Promise<void>
+  handleLogin(usuarioLogin: UsuarioLogin): Promise<void>
   isLoading: boolean
 }
 
@@ -16,12 +20,17 @@ interface AuthProviderProps {
   children: ReactNode
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext({} as AuthContextProps)
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [usuario, setUsuario] = useState<UsuarioLogin>({
+  const [usuario, setUsuario] = useState<UsuarioComToken>({
+    id: 0,
+    nome: "",
     usuario: "",
     senha: "",
+    foto: "",
+    token: "",
   })
 
   const [isLoading, setIsLoading] = useState(false)
@@ -39,8 +48,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   function handleLogout() {
     setUsuario({
+      id: 0,
+      nome: "",
       usuario: "",
       senha: "",
+      foto: "",
+      token: "",
     })
   }
 
