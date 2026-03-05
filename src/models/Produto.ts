@@ -1,4 +1,4 @@
-import type Categoria from "../pages/Categoria"
+import type Categoria from "./Categoria"
 import type Pedido from "./Pedido"
 
 export default interface Produto {
@@ -11,6 +11,6 @@ export default interface Produto {
   proteinas: string
   carboritratos: string
   gorduras: string
-  categoria: Categoria
-  pedido: Pedido
+  categoria?: Categoria
+  pedido?: Pedido
 }

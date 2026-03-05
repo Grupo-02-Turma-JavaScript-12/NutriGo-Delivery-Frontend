@@ -1,7 +1,7 @@
-import type Produto from "../models/Produto"
+import type Produto from "./Produto"
 
 export default interface Categoria {
   id: number
   nome: string
-  produto: Produto
+  produto?: Produto[] | null
 }
