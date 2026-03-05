@@ -9,12 +9,9 @@ import Estabelecimentos from "./pages/Estabelecimentos"
 import { Home } from "./pages/Home"
 import { Login } from "./pages/Login"
 import Produtos from "./pages/Produtos"
+import { Sobre } from "./pages/Sobre"
+import { Contato } from "./pages/Contato"
 import CardProduto from "./components/cardprodutos/CardProduto"
-
-
-import DeletarPedido from "./pages/pedido/DeletarPedido"
-import FormPedido from "./pages/pedido/FormPedido"
-import ListaPedidos from "./pages/pedido/ListaPedidos"
 
 export function App() {
   return (
@@ -30,10 +27,8 @@ export function App() {
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/cardproduto" element={<CardProduto />} />
           <Route path="/estabelecimentos" element={<Estabelecimentos />} />
-          <Route path="/pedidos" element={<ListaPedidos />} />
-          <Route path="/cadastrarPedido" element={<FormPedido />} />
-          <Route path="/editarPedido/:id" element={<FormPedido />} />
-          <Route path="/deletarPedido/:id" element={<DeletarPedido />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/contato" element={<Contato />} />
         </Routes>
         <Footer />
       </BrowserRouter>
