@@ -99,7 +99,7 @@ const ProdutoDetalhe = ({ produto, onClose }) => {
             </div>
           </div>
 
-          <button className="flex w-full items-center justify-center gap-3 rounded-2xl bg-green-600 py-4 font-bold text-white shadow-lg shadow-green-100 transition-all hover:bg-green-700 active:scale-[0.98]">
+          <button className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl bg-green-600 py-4 font-bold text-white shadow-lg shadow-green-100 transition-all hover:bg-green-700 active:scale-[0.98]">
             <ShoppingCart size={20} />
             Adicionar ao Pedido • R$ {produto.preco.toFixed(2)}
           </button>

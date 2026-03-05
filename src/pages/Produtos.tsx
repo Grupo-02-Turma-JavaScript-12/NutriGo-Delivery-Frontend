@@ -181,7 +181,7 @@ const Produtos = () => {
                         R$ {p.preco.toFixed(2)}
                       </span>
                     </div>
-                    <button className="rounded-xl bg-green-600 p-2.5 text-white shadow-lg shadow-green-100 transition hover:bg-green-700 active:scale-90">
+                    <button className="cursor-pointer rounded-xl bg-green-600 p-2.5 text-white shadow-lg shadow-green-100 transition hover:bg-green-700 active:scale-90">
                       <ShoppingCart size={18} />
                     </button>
                   </div>
