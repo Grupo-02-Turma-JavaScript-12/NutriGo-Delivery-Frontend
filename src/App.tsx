@@ -9,8 +9,9 @@ import Estabelecimentos from "./pages/Estabelecimentos"
 import { Home } from "./pages/Home"
 import { Login } from "./pages/Login"
 import Produtos from "./pages/Produtos"
+import { Sobre } from "./pages/Sobre"
+import { Contato } from "./pages/Contato"
 import CardProduto from "./components/cardprodutos/CardProduto"
-
 
 export function App() {
   return (
@@ -26,6 +27,8 @@ export function App() {
           <Route path="/produtos" element={<Produtos />} />
           <Route path="/cardproduto" element={<CardProduto />} />
           <Route path="/estabelecimentos" element={<Estabelecimentos />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/contato" element={<Contato />} />
         </Routes>
         <Footer />
       </BrowserRouter>
