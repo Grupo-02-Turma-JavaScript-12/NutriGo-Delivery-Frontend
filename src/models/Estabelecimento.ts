@@ -1,11 +1,15 @@
 import type Pedido from "./Pedido"
+import type Produto from "./Produto"
 import type Usuario from "./Usuario"
 
 export default interface Estabelecimento {
   id: number
   nome: string
-  usuario?: Usuario | null
   categoria: string
+  foto_estabelecimento: string
+  endereco: string
   taxa_entrega: number
-  pedido: Pedido
+  produto?: Produto[]
+  pedido?: Pedido[]
+  usuario?: Usuario[]
 }

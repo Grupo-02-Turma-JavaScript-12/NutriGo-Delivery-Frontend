@@ -1,32 +1,55 @@
-
-
-import { PencilIcon, TrashIcon } from "@phosphor-icons/react"
+import { ShoppingCart } from "lucide-react"
 import type Estabelecimento from "../../models/Estabelecimento"
 
 export interface CardEstabelecimentoProps {
   estabelecimento: Estabelecimento
 }
 
-function CardEstabelecimento({estabelecimento}:CardEstabelecimentoProps) {
+function CardEstabelecimento({ estabelecimento }: CardEstabelecimentoProps) {
   return (
-    <div className="m-2 flex w-200 items-center justify-between overflow-hidden rounded-md border bg-green-950 pl-2 shadow-md">
-      {/* Div com os atributos e botões */}
-      <div className="flex justify-between items-center h-full w-full rounded-md bg-gray-100">
-        {/* Div com os atributos */}
-        <div className="ml-3 flex flex-col gap-1">
-          <p className="font-semibold">Estabelecimento: {estabelecimento.nome}</p>
-          <p className="font-semibold">Categoria: {estabelecimento.categoria}</p>
-          <p className="font-semibold">Taxa de entrega: {estabelecimento.taxa_entrega}</p>
+    <div className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl">
+      {/* Imagem */}
+      <div className="relative overflow-hidden rounded-t-2xl shadow">
+        <img
+          src={estabelecimento.foto_estabelecimento}
+          alt={estabelecimento.nome}
+          className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        <span className="absolute top-3 left-3 rounded-lg bg-white/90 px-2 py-1 text-[10px] font-bold tracking-wider text-gray-700 uppercase backdrop-blur">
+          {estabelecimento.categoria}
+        </span>
+      </div>
+
+      {/* Conteúdo */}
+      <div
+        // onClick={() => onClick(produto)}
+        className="flex flex-1 cursor-pointer flex-col p-4"
+      >
+        <div>
+          <h4 className="mb-2 min-h-[40px] leading-tight font-bold text-gray-800">
+            {estabelecimento.nome}
+          </h4>
+          
         </div>
 
-        {/* Div com os botões */}
-        <div className="flex m-2 flex-col gap-2">
-          <button className="rounded border p-1">
-            <PencilIcon size={30} />
-          </button>
+        {/* Rodapé */}
+        <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
+          <div className="flex flex-col">
+            <span className="text-[12px] font-bold text-gray-400">
+              Taxa de entrega
+            </span>
+            <span className="text-md leading-none font-black text-green-700">
+              R${" "}
+              {Number(estabelecimento.taxa_entrega).toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
+          </div>
 
-          <button className="rounded border text-red- p-1">
-            <TrashIcon size={30} />
+          <button className="rounded-xl bg-green-700 p-2.5 text-white shadow-lg shadow-green-100 transition hover:bg-green-700 active:scale-90">
+            <ShoppingCart size={18} />
           </button>
         </div>
       </div>

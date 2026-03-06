@@ -52,13 +52,13 @@ const ProdutoDetalhe = ({ produto, onClose }: ProdutoDetalheProps) => {
             <div className="flex-1">
               <div className="flex items-center gap-1">
                 <h4 className="text-sm font-bold text-gray-800">
-                  Cozinha Central FitGo
+                  {produto.estabelecimento?.nome}
                 </h4>
                 <Star size={14} className="fill-yellow-400 text-yellow-400" />
                 <span className="text-xs font-bold text-yellow-600">4.9</span>
               </div>
               <p className="text-xs text-gray-500">
-                Unidade Paulista • 25-35 min
+                {produto.estabelecimento?.endereco}
               </p>
             </div>
             <ChevronRight size={20} className="text-gray-300" />
@@ -96,13 +96,13 @@ const ProdutoDetalhe = ({ produto, onClose }: ProdutoDetalheProps) => {
               <span className="block text-[10px] font-bold text-green-400 uppercase">
                 Carbos
               </span>
-              <span className="text-sm font-black text-green-700">15g</span>
+              <span className="text-sm font-black text-green-700">{produto.carboidratos || "0g"}</span>
             </div>
             <div className="rounded-2xl border border-purple-100 bg-purple-50 p-3 text-center">
               <span className="block text-[10px] font-bold text-purple-400 uppercase">
                 Gorduras
               </span>
-              <span className="text-sm font-black text-purple-700">8g</span>
+              <span className="text-sm font-black text-purple-700">{produto.gorduras || "0g"}</span>
             </div>
           </div>
 

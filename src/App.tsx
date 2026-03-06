@@ -16,12 +16,15 @@ import FormPedido from "./pages/pedido/FormPedido"
 import ListaPedidos from "./pages/pedido/ListaPedidos"
 import { Sobre } from "./pages/Sobre"
 
+
 export function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Navbar />
+        <div className="min-h-[70vh]">
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -39,6 +42,7 @@ export function App() {
           <Route path="/editarPedido/:id" element={<FormPedido />} />
           <Route path="/deletarPedido/:id" element={<DeletarPedido />} />
         </Routes>
+        </div>
         <Footer />
       </BrowserRouter>
     </AuthProvider>
