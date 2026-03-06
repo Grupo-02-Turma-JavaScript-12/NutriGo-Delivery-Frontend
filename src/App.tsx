@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
+import CardProduto from "./components/cardprodutos/CardProduto"
 import { Footer } from "./components/footer/Footer"
 import { Navbar } from "./components/navbar/Navbar"
 import { ScrollToTop } from "./components/ScrollToTop"
@@ -30,6 +31,12 @@ export function App() {
           <Route path="/cadastrarproduto" element={<FormProduto />} />
           <Route path="/editarproduto" element={<FormProduto />} />
           <Route path="/estabelecimentos" element={<Estabelecimentos />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/contato" element={<Contato />} />
+          <Route path="/pedidos" element={<ListaPedidos />} />
+          <Route path="/cadastrarPedido" element={<FormPedido />} />
+          <Route path="/editarPedido/:id" element={<FormPedido />} />
+          <Route path="/deletarPedido/:id" element={<DeletarPedido />} />
         </Routes>
         <Footer />
       </BrowserRouter>
