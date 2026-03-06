@@ -33,9 +33,6 @@ export const Navbar = () => {
           <Link className="text-green-800 hover:text-yellow-600" to="/home">
             Home
           </Link>
-          <Link className="text-green-800 hover:text-yellow-600" to="/Sobre">
-            Sobre
-          </Link>
           <Link className="text-green-800 hover:text-yellow-600" to="/produtos">
             Produtos
           </Link>
@@ -45,10 +42,16 @@ export const Navbar = () => {
           >
             Estabelecimentos
           </Link>
+          <Link className="text-green-800 hover:text-yellow-600" to="/Sobre">
+            Sobre
+          </Link>
 
           {usuario.token ? (
             <div className="flex items-center gap-4 border-l border-green-200 pl-4">
               <Link to="/perfil" className="group flex items-center gap-2">
+                <span className="text-sm font-semibold text-green-800 group-hover:text-yellow-600">
+                  Olá, {usuario.nome?.split(" ")[0]}
+                </span>
                 <img
                   src={
                     usuario.foto ||
@@ -57,9 +60,6 @@ export const Navbar = () => {
                   alt="Perfil"
                   className="h-10 w-10 rounded-full border-2 border-green-800 object-cover group-hover:border-yellow-600"
                 />
-                <span className="text-sm font-semibold text-green-800 group-hover:text-yellow-600">
-                  Olá, {usuario.nome?.split(" ")[0]}
-                </span>
               </Link>
               <button
                 onClick={logout}

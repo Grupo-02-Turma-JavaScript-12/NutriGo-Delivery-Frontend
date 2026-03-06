@@ -35,6 +35,10 @@ export function FormProduto() {
   } as unknown as Produto)
 
   useEffect(() => {
+    console.log(usuario)
+  }, [])
+
+  useEffect(() => {
     if (usuario.token === "") {
       ToastAlerta("Você precisa estar logado", "info")
       navigate("/")
@@ -95,7 +99,7 @@ export function FormProduto() {
     } else if (name === "estabelecimento") {
       setProduto({
         ...produto,
-        estabelecimento: { id: Number(value), nome: "" } as Estabelecimento,
+        estabelecimento: { id: Number(usuario.id), nome: "" } as Estabelecimento,
       })
     } else {
       setProduto({
@@ -258,25 +262,6 @@ export function FormProduto() {
             </select>
           </div>
 
-          <div className="flex flex-col">
-            <label className="font-bold text-gray-700">Sua Loja</label>
-            <select
-              name="estabelecimento"
-              value={produto.estabelecimento?.id || ""}
-              onChange={atualizarEstado}
-              className="rounded-lg border bg-white p-3 focus:border-green-600 focus:outline-none"
-              required
-            >
-              <option value="" disabled>
-                Selecione a sua loja
-              </option>
-              {estabelecimentos.map((est) => (
-                <option key={est.id} value={est.id}>
-                  {est.nome}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
         <div className="mt-4 flex justify-end gap-4">

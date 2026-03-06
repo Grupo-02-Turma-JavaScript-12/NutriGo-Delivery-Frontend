@@ -33,21 +33,24 @@ export function Estabelecimentos() {
 
   return (
     <>
-      {isLoading && (
-        <div className="my-8 flex w-full justify-center">
-          <SyncLoader color="#312e81" size={32} />
-        </div>
-      )}
-      <div className="m-2 flex flex-col gap-2">
-        <h1 className="text-center font-semibold">
-          Estabelecimentos Cadastrados
+      <div className="mx-90 mt-30 mb-15">
+        <h1 className="text-center text-2xl text-shadow-2xs mb-8 text-[#1d5f29] font-semibold">
+          Venha comer com a gente
         </h1>
-        {estabelecimentos.map((estabelecimento) => (
-          <CardEstabelecimento
-            key={estabelecimento.id}
-            estabelecimento={estabelecimento}
-          />
-        ))}
+        {isLoading && (
+          <div className="my-8 flex w-full justify-center">
+            <SyncLoader color="#312e81" size={32} />
+          </div>
+        )}
+
+        <div className="grid grid-cols-4 gap-8">
+          {estabelecimentos.map((estabelecimento) => (
+            <CardEstabelecimento
+              key={estabelecimento.id}
+              estabelecimento={estabelecimento}
+            />
+          ))}
+        </div>
       </div>
     </>
   )

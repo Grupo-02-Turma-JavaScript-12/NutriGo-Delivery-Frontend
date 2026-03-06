@@ -4,6 +4,7 @@ import type Usuario from "../models/Usuario"
 import type UsuarioLogin from "../models/UsuarioLogin"
 import { login } from "../services/Service"
 import { ToastAlerta } from "../util/ToastAlerta"
+import type Estabelecimento from "../models/Estabelecimento"
 
 interface UsuarioComToken extends Usuario {
   token: string
@@ -30,6 +31,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     usuario: "",
     senha: "",
     foto: "",
+    tipo: "",
+    pedido: [],
+    estabelecimento: {} as Estabelecimento,
     token: "",
   })
 

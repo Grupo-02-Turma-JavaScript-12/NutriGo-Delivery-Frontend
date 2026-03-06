@@ -5,6 +5,7 @@ import { ToastAlerta } from "../util/ToastAlerta"
 import { AuthContext } from "../contexts/AuthContext"
 import { atualizar, cadastrar } from "../services/Service"
 import type Usuario from "../models/Usuario"
+import { Plus } from "lucide-react"
 
 export function Perfil() {
   const navigate = useNavigate()
@@ -24,7 +25,7 @@ export function Perfil() {
     categoria: "Saudável",
     taxa_entrega: 0,
     foto_estabelecimento: "",
-    endereco: "", 
+    endereco: "",
   })
 
   useEffect(() => {
@@ -96,8 +97,8 @@ export function Perfil() {
         headers: { Authorization: usuario.token },
       })
       ToastAlerta("Estabelecimento configurado com sucesso!", "sucesso")
-      setIsCadastrandoLoja(false) 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setIsCadastrandoLoja(false)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error(error)
       if (error.response && error.response.data) {
@@ -133,6 +134,18 @@ export function Perfil() {
           <p className="mt-2 text-orange-600">
             Configure sua loja para começar a vender.
           </p>
+
+          {/* botao cadastrar produto */}
+          <div>
+            {usuario.tipo === "ESTABELECIMENTO" && (
+              <button
+                onClick={() => navigate("/cadastrarproduto")}
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-6 py-2.5 font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-700 sm:w-auto"
+              >
+                <Plus size={20} /> Cadastrar Produto
+              </button>
+            )}
+          </div>
         </div>
         {!isCadastrandoLoja && (
           <button

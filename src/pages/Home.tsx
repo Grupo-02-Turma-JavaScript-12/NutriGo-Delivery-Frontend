@@ -183,7 +183,8 @@ export function Home() {
                 className="flex items-center gap-5 rounded-2xl bg-white p-8 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] transition-shadow duration-300 hover:shadow-lg"
               >
                 {/* Container do Ícone */}
-                <div className={`${item.bgIcon} flex-shrink-0 rounded-2xl p-4`}>
+                {/* <div className={`${item.bgIcon} flex-shrink-0 rounded-2xl p-4`}> */}
+                <div className={`${item.bgIcon} shrink-0 rounded-2xl p-4`}>
                   {item.icon}
                 </div>
 

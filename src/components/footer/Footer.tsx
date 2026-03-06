@@ -10,14 +10,170 @@ export function Footer() {
   const data = new Date().getFullYear()
 
   return (
-    <footer className="z-50 bg-white">
-      <div className="mx-auto max-w-7xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
-        <div className="sm:flex sm:items-center sm:justify-between">
-          {/* <div className="text-teal-600">
-            <img src="" alt="Logo da NutriGo Delivery" className="w-35 items-center" />
-          </div> */}
+    <footer className="z-50 mt-4 bg-white text">
+      {/* <div className="mx-auto max-w-7xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-13 lg:px-5 flex "> */}
 
-          <ul className="mt-8 flex justify-start gap-6 sm:mt-0 sm:justify-end">
+      <div className="mx-90 mb-10 flex justify-between">
+        <div>
+          <p className="font-medium text-green-800">Acesso Rápido</p>
+          <ul className="mt-6 space-y-4 text-sm">
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Início
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Estabelecimentos
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Meus Pedidos
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Meu Perfil
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-medium text-green-800">Descubra</p>
+          <ul className="mt-6 space-y-4 text-sm">
+            <li>
+              <a
+                href="/sobre"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Comida Saudável
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Lanches & Fast Food
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Sobremesas
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Restaurantes em Destaque
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-medium text-green-800">Institucional</p>
+          <ul className="mt-6 space-y-4 text-sm">
+            <li>
+              <a
+                href="/contato"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Sobre Nós
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Fale Conosco
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Cadastre seu Restaurante
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Seja um Entregador
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-medium text-green-800">Legal</p>
+          <ul className="mt-6 space-y-4 text-sm">
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Termos de Uso
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Política de Privacidade
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Política de Reembolso 
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-green-600 transition hover:opacity-75"
+              >
+                Dúvidas Frequentes (FAQ)
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* footer logo  */}
+      <div className="flex gap-3 justify-center mb-2">
+        <div className="mt-2 flex text-teal-600">
+          <img src="/public/img/logo/logo.png" alt="" className="w-30" />
+        </div>
+        {/* Redes sociais */}
+        <div className="flex sm:flex sm:items-center sm:justify-between">
+          <ul className="flex justify-start gap-6 sm:mt-0 sm:justify-end">
             <li>
               <Link
                 to="#"
@@ -26,7 +182,7 @@ export function Footer() {
                 className="text-green-800 transition hover:text-green-600 hover:opacity-75"
               >
                 <span className="sr-only">Facebook</span>
-                <FacebookLogoIcon size={24} weight="fill" />
+                <FacebookLogoIcon size={20} weight="fill" />
               </Link>
             </li>
             <li>
@@ -37,7 +193,7 @@ export function Footer() {
                 className="text-green-800 transition hover:text-green-600 hover:opacity-75"
               >
                 <span className="sr-only">Instagram</span>
-                <InstagramLogoIcon size={24} weight="fill" />
+                <InstagramLogoIcon size={20} weight="fill" />
               </a>
             </li>
             <li>
@@ -48,7 +204,7 @@ export function Footer() {
                 className="text-green-800 transition hover:text-green-600 hover:opacity-75"
               >
                 <span className="sr-only">Twitter</span>
-                <TwitterLogoIcon size={24} weight="fill" />
+                <TwitterLogoIcon size={20} weight="fill" />
               </a>
             </li>
             <li>
@@ -59,170 +215,15 @@ export function Footer() {
                 className="text-green-800 transition hover:text-green-600 hover:opacity-75"
               >
                 <span className="sr-only">GitHub</span>
-                <GithubLogoIcon size={24} weight="fill" />
+                <GithubLogoIcon size={20} weight="fill" />
               </a>
             </li>
           </ul>
         </div>
-
-        <div className="grid grid-cols-1 gap-8 border-t border-gray-100 pt-8 sm:grid-cols-2 lg:grid-cols-4 lg:pt-16">
-          <div>
-            <p className="font-medium text-green-800">Acesso Rápido</p>
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Início
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Estabelecimentos
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Meus Pedidos
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Meu Perfil
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium text-green-800">Descubra</p>
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <a
-                  href="/sobre"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Comida Saudável
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Lanches & Fast Food
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Sobremesas
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Restaurantes em Destaque
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium text-green-800">Institucional</p>
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <a
-                  href="/contato"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Sobre Nós
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Fale Conosco
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Cadastre seu Restaurante
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Seja um Entregador
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="font-medium text-green-800">Legal</p>
-            <ul className="mt-6 space-y-4 text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Termos de Uso
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Política de Privacidade
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Política de Reembolso / Cancelamento
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-green-600 transition hover:opacity-75"
-                >
-                  Dúvidas Frequentes (FAQ)
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <p className="text-xs text-green-600">
-          © {data}. NutriGo Delivery. Todos os direitos reservados.
-        </p>
       </div>
+      <p className="text-center text- text-green-600">
+        © {data}. NutriGo Delivery. Todos os direitos reservados.
+      </p>
     </footer>
   )
 }

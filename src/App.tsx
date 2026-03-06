@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-
-import CardProduto from "./components/cardprodutos/CardProduto"
 import { Footer } from "./components/footer/Footer"
 import { Navbar } from "./components/navbar/Navbar"
 import { ScrollToTop } from "./components/ScrollToTop"
@@ -10,9 +8,13 @@ import { Estabelecimentos } from "./pages/Estabelecimentos"
 import { Home } from "./pages/Home"
 import { Login } from "./pages/Login"
 import { Produtos } from "./pages/Produtos"
-// import { CardProduto } from "./components/cardprodutos/CardProduto"
 import { Perfil } from "./pages/Perfil"
 import { FormProduto } from "./components/formproduto/FormProduto"
+import { Sobre } from "./pages/Sobre"
+import { Contato } from "./pages/Contato"
+import ListaPedidos from "./pages/pedido/ListaPedidos"
+import FormPedido from "./pages/pedido/FormPedido"
+import DeletarPedido from "./pages/pedido/DeletarPedido"
 
 export function App() {
   return (
@@ -20,6 +22,8 @@ export function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Navbar />
+        <div className="min-h-[70vh]">
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -27,7 +31,7 @@ export function App() {
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/produtos" element={<Produtos />} />
-          {/* <Route path="/cardproduto" element={<CardProduto />} /> */}
+          {/* <Route path="/cardproduto" element={< />} /> */}
           <Route path="/cadastrarproduto" element={<FormProduto />} />
           <Route path="/editarproduto" element={<FormProduto />} />
           <Route path="/estabelecimentos" element={<Estabelecimentos />} />
@@ -38,6 +42,7 @@ export function App() {
           <Route path="/editarPedido/:id" element={<FormPedido />} />
           <Route path="/deletarPedido/:id" element={<DeletarPedido />} />
         </Routes>
+        </div>
         <Footer />
       </BrowserRouter>
     </AuthProvider>
