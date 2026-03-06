@@ -1,57 +1,63 @@
-import { Flame, Search, ShoppingCart } from "lucide-react" // Adicionei o ícone Search
-import { useEffect, useState } from "react"
+import { Flame, Pencil, Plus, Search, ShoppingCart, Trash2 } from "lucide-react"
+import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../contexts/AuthContext"
 import type Categoria from "../models/Categoria"
+import type Estabelecimento from "../models/Estabelecimento"
 import type Produto from "../models/Produto"
-import { buscar } from "../services/Service"
+import { buscar, deletar } from "../services/Service"
+import { ToastAlerta } from "../util/ToastAlerta"
 import ProdutoDetalhe from "./ProdutoDetalhe"
 
-type FlatProduto = Produto & { categoriaNome: string }
+export function Produtos() {
+  const { usuario } = useContext(AuthContext)
+  const navigate = useNavigate()
 
-const Produtos = () => {
-  const [categoriesList, setCategoriesList] = useState<Categoria[]>([])
+  const [categorias, setCategorias] = useState<Categoria[]>([])
+  const [produtos, setProdutos] = useState<Produto[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Produto[]>([])
+  const [meuEstabelecimentoId, setMeuEstabelecimentoId] = useState<
+    number | null
+  >(null)
+
   const [loading, setLoading] = useState(true)
-  const [selectedProduct, setSelectedProduct] = useState<FlatProduto | null>(
-    null,
-  )
+  const [selectedProduct, setSelectedProduct] = useState<Produto | null>(null)
   const [selectedCategory, setSelectedCategory] = useState("Todos")
-  const [allProducts, setAllProducts] = useState<FlatProduto[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<FlatProduto[]>([])
-
   const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
-    async function fetchCategories() {
+    async function fetchDados() {
       try {
         setLoading(true)
-        await buscar("/categoria", setCategoriesList)
+        await buscar("/categoria", setCategorias)
+        await buscar("/produtos", setProdutos)
+
+        if (usuario.tipo === "ESTABELECIMENTO" && usuario.token) {
+          await buscar(
+            "/estabelecimentos",
+            (dados: Estabelecimento[]) => {
+              const meu = dados.find((e) => e.usuario?.id === usuario.id)
+              if (meu) setMeuEstabelecimentoId(meu.id)
+            },
+            { headers: { Authorization: usuario.token } },
+          )
+        }
       } catch (error) {
-        console.error("Erro ao buscar categorias:", error)
+        console.error(error)
       } finally {
         setLoading(false)
       }
     }
-    fetchCategories()
-  }, [])
+    fetchDados()
+  }, [usuario.id, usuario.tipo, usuario.token])
 
   useEffect(() => {
-    if (categoriesList.length > 0) {
-      const flatProducts: FlatProduto[] = categoriesList.flatMap((cat) =>
-        (cat.produto ?? []).map((p) => ({
-          ...p,
-          categoriaNome: cat.nome,
-        })),
-      )
-      setAllProducts(flatProducts)
-      setFilteredProducts(flatProducts)
-    }
-  }, [categoriesList])
-
-  useEffect(() => {
-    let result = allProducts
+    let result = produtos
 
     if (selectedCategory !== "Todos") {
       result = result.filter(
-        (p) => p.categoriaNome.toLowerCase() === selectedCategory.toLowerCase(),
+        (p) =>
+          p.categoria?.nome.toLowerCase() === selectedCategory.toLowerCase(),
       )
     }
 
@@ -62,7 +68,22 @@ const Produtos = () => {
     }
 
     setFilteredProducts(result)
-  }, [selectedCategory, searchTerm, allProducts])
+  }, [selectedCategory, searchTerm, produtos])
+
+  async function handleDelete(id: number) {
+    if (window.confirm("Tem certeza que deseja deletar este produto?")) {
+      try {
+        await deletar(`/produtos/${id}`, {
+          headers: { Authorization: usuario.token },
+        })
+        ToastAlerta("Produto deletado com sucesso!", "sucesso")
+        setProdutos(produtos.filter((p) => p.id !== id))
+      } catch (error) {
+        console.error(error)
+        ToastAlerta("Erro ao deletar o produto.", "erro")
+      }
+    }
+  }
 
   return (
     <div className="mt-20 min-h-screen bg-gray-50 pb-20">
@@ -81,7 +102,7 @@ const Produtos = () => {
             >
               Todos
             </button>
-            {categoriesList.map((cat) => (
+            {categorias.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.nome)}
@@ -95,7 +116,7 @@ const Produtos = () => {
               </button>
             ))}
           </nav>
-          {/* Input de Busca */}
+
           <div className="relative mx-auto w-full max-w-2xl">
             <Search
               className="absolute top-1/2 left-4 -translate-y-1/2 text-gray-400"
@@ -113,16 +134,28 @@ const Produtos = () => {
       </div>
 
       <main className="mx-auto mt-12 max-w-6xl px-4">
-        <div className="mb-6 flex items-center gap-2">
-          <h2 className="text-2xl font-bold text-gray-800">
-            {searchTerm
-              ? `Resultados para "${searchTerm}"`
-              : selectedCategory === "Todos"
-                ? "Nossos Pratos"
-                : selectedCategory}
-          </h2>
-          <div className="ml-2 h-px flex-1 bg-gray-200"></div>
+        <div className="mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <div className="flex w-full items-center gap-2 sm:w-auto">
+            <h2 className="text-2xl font-bold whitespace-nowrap text-gray-800">
+              {searchTerm
+                ? `Resultados para "${searchTerm}"`
+                : selectedCategory === "Todos"
+                  ? "Nossos Pratos"
+                  : selectedCategory}
+            </h2>
+            <div className="ml-2 h-px flex-1 bg-gray-200 sm:hidden"></div>
+          </div>
+
+          {usuario.tipo === "ESTABELECIMENTO" && (
+            <button
+              onClick={() => navigate("/cadastrarproduto")}
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-6 py-2.5 font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-700 sm:w-auto"
+            >
+              <Plus size={20} /> Cadastrar Produto
+            </button>
+          )}
         </div>
+        <div className="mb-6 hidden h-px w-full bg-gray-200 sm:block"></div>
 
         {loading ? (
           <div className="grid animate-pulse grid-cols-2 gap-6 md:grid-cols-4">
@@ -132,59 +165,92 @@ const Produtos = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {filteredProducts.map((p) => (
-              <div
-                key={p.id}
-                className="group flex h-full flex-col rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
-              >
-                <div className="relative overflow-hidden rounded-t-2xl">
-                  <img
-                    src={p.foto_produto}
-                    alt={p.nome}
-                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute top-3 left-3 rounded-lg bg-white/90 px-2 py-1 text-[10px] font-bold tracking-wider text-gray-700 uppercase backdrop-blur">
-                    {p.categoriaNome}
-                  </span>
-                </div>
+            {filteredProducts.map((p) => {
+              const isDono = p.estabelecimento?.id === meuEstabelecimentoId
 
+              return (
                 <div
-                  onClick={() => setSelectedProduct(p)}
-                  className="flex flex-1 cursor-pointer flex-col p-4"
+                  key={p.id}
+                  className="group relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
                 >
-                  <h4 className="mb-2 min-h-10 leading-tight font-bold text-gray-800">
-                    {p.nome}
-                  </h4>
+                  <div className="relative overflow-hidden rounded-t-2xl">
+                    <img
+                      src={p.foto_produto}
+                      alt={p.nome}
+                      className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute top-3 left-3 rounded-lg bg-white/90 px-2 py-1 text-[10px] font-bold tracking-wider text-gray-700 uppercase backdrop-blur">
+                      {p.categoria?.nome || "Sem Categoria"}
+                    </span>
 
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {p.calorias && (
-                      <span className="flex items-center rounded-md bg-orange-50 px-2 py-0.5 text-[11px] font-semibold text-orange-600">
-                        <Flame size={12} className="mr-1" /> {p.calorias} kcal
-                      </span>
-                    )}
-                    {p.proteinas && (
-                      <span className="flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-600">
-                        {p.proteinas} prot.
-                      </span>
+                    {isDono && (
+                      <div className="absolute top-3 right-3 flex gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigate(`/editarproduto/${p.id}`)
+                          }}
+                          className="rounded-full bg-yellow-400 p-2 text-yellow-900 shadow transition hover:scale-110 hover:bg-yellow-500"
+                          title="Editar Produto"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDelete(p.id)
+                          }}
+                          className="rounded-full bg-red-500 p-2 text-white shadow transition hover:scale-110 hover:bg-red-600"
+                          title="Deletar Produto"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     )}
                   </div>
 
-                  <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
-                    <div className="flex flex-col">
-                      <span className="text-[10px] font-bold text-gray-400 uppercase">
-                        Preço
-                      </span>
-                      <span className="text-lg leading-none font-black text-gray-900">
-                        R$ {Number(p.preco).toFixed(2)}
-                      </span>
+                  <div
+                    onClick={() => setSelectedProduct(p)}
+                    className="flex flex-1 cursor-pointer flex-col p-4"
+                  >
+                    <h4 className="mb-1 line-clamp-2 min-h-10 leading-tight font-bold text-gray-800">
+                      {p.nome}
+                    </h4>
+
+                    <span className="mb-3 text-xs text-gray-500">
+                      de {p.estabelecimento?.nome || "Desconhecido"}
+                    </span>
+
+                    <div className="mb-4 flex flex-wrap gap-2">
+                      {p.calorias && (
+                        <span className="flex items-center rounded-md bg-orange-50 px-2 py-0.5 text-[11px] font-semibold text-orange-600">
+                          <Flame size={12} className="mr-1" /> {p.calorias} kcal
+                        </span>
+                      )}
+                      {p.proteinas && (
+                        <span className="flex items-center rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-600">
+                          {p.proteinas} prot.
+                        </span>
+                      )}
                     </div>
-                    <button className="cursor-pointer rounded-xl bg-green-600 p-2.5 text-white shadow-lg shadow-green-100 transition hover:bg-green-700 active:scale-90">
-                      <ShoppingCart size={18} />
-                    </button>
+
+                    <div className="mt-auto flex items-center justify-between border-t border-gray-50 pt-4">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase">
+                          Preço
+                        </span>
+                        <span className="text-lg leading-none font-black text-gray-900">
+                          R$ {Number(p.preco).toFixed(2)}
+                        </span>
+                      </div>
+                      <button className="cursor-pointer rounded-xl bg-green-600 p-2.5 text-white shadow-lg shadow-green-100 transition hover:bg-green-700 active:scale-90">
+                        <ShoppingCart size={18} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         )}
 
@@ -199,12 +265,13 @@ const Produtos = () => {
 
       {selectedProduct && (
         <ProdutoDetalhe
-          produto={selectedProduct}
+          produto={{
+            ...selectedProduct,
+            categoriaNome: selectedProduct.categoria?.nome || "Sem Categoria",
+          }}
           onClose={() => setSelectedProduct(null)}
         />
       )}
     </div>
   )
 }
-
-export default Produtos

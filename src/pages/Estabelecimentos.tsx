@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useContext, useEffect, useState } from "react"
 import { SyncLoader } from "react-spinners"
 import CardEstabelecimento from "../components/cardestabelecimento/CardEstabelecimento"
@@ -8,7 +5,7 @@ import { AuthContext } from "../contexts/AuthContext"
 import type Estabelecimento from "../models/Estabelecimento"
 import { buscar } from "../services/Service"
 
-function Estabelecimentos() {
+export function Estabelecimentos() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>(
     [],
@@ -17,23 +14,23 @@ function Estabelecimentos() {
   const token = usuario.token
 
   useEffect(() => {
-    buscarEstabelecimentos()
-  }, [])
-
-  async function buscarEstabelecimentos() {
-    try {
-      setIsLoading(true)
-      await buscar("/estabelecimentos", setEstabelecimentos, {
-        headers: { Authorization: token },
-      })
-    } catch (error: any) {
-      if (error.toString().includes("401")) {
-        handleLogout()
+    async function buscarEstabelecimentos() {
+      try {
+        setIsLoading(true)
+        await buscar("/estabelecimentos", setEstabelecimentos, {
+          headers: { Authorization: token },
+        })
+      } catch (error) {
+        if (String(error).includes("401")) {
+          handleLogout()
+        }
+      } finally {
+        setIsLoading(false)
       }
-    } finally {
-      setIsLoading(false)
     }
-  }
+    buscarEstabelecimentos()
+  }, [token, handleLogout])
+
   return (
     <>
       {isLoading && (
@@ -55,4 +52,3 @@ function Estabelecimentos() {
     </>
   )
 }
-export default Estabelecimentos

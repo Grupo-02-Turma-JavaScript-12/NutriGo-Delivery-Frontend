@@ -18,10 +18,11 @@ export function Cadastro() {
     usuario: "",
     senha: "",
     foto: "",
+    tipo: "USUARIO",
   })
 
   function retornar() {
-    navigate("/")
+    navigate("/login")
   }
 
   useEffect(() => {
@@ -31,7 +32,9 @@ export function Cadastro() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario])
 
-  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+  function atualizarEstado(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) {
     setUsuario({
       ...usuario,
       [e.target.name]: e.target.value,
@@ -69,12 +72,12 @@ export function Cadastro() {
   return (
     <>
       <div className="grid h-screen grid-cols-1 place-items-center font-bold lg:grid-cols-2">
-        {/* <div className="hidden min-h-screen w-full bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] bg-cover bg-center bg-no-repeat lg:block"></div> */}
         <form
           className="flex w-2/3 flex-col items-center justify-center gap-3"
           onSubmit={cadastrarNovoUsuario}
         >
           <h2 className="text-5xl text-lime-800">Cadastrar</h2>
+
           <div className="flex w-full flex-col">
             <label htmlFor="nome" className="font-bold text-lime-800">
               Nome
@@ -91,6 +94,7 @@ export function Cadastro() {
               }
             />
           </div>
+
           <div className="flex w-full flex-col">
             <label htmlFor="usuario" className="font-bold text-lime-800">
               E-mail
@@ -107,6 +111,7 @@ export function Cadastro() {
               }
             />
           </div>
+
           <div className="flex w-full flex-col">
             <label htmlFor="foto" className="font-bold text-lime-800">
               Foto
@@ -123,6 +128,25 @@ export function Cadastro() {
               }
             />
           </div>
+
+          <div className="flex w-full flex-col">
+            <label htmlFor="tipo" className="font-bold text-lime-800">
+              Tipo de Conta
+            </label>
+            <select
+              id="tipo"
+              name="tipo"
+              className="rounded border-2 border-lime-600 bg-white p-2 focus:border-lime-800 focus:ring-1 focus:ring-lime-800 focus:outline-none"
+              value={usuario.tipo}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                atualizarEstado(e)
+              }
+            >
+              <option value="USUARIO">Cliente</option>
+              <option value="ESTABELECIMENTO">Estabelecimento Parceiro</option>
+            </select>
+          </div>
+
           <div className="flex w-full flex-col">
             <label htmlFor="senha" className="font-bold text-lime-800">
               Senha
@@ -139,6 +163,7 @@ export function Cadastro() {
               }
             />
           </div>
+
           <div className="flex w-full flex-col">
             <label htmlFor="confirmarSenha" className="font-bold text-lime-800">
               Confirmar Senha
@@ -155,7 +180,8 @@ export function Cadastro() {
               }
             />
           </div>
-          <div className="flex w-full justify-around gap-8">
+
+          <div className="mt-2 flex w-full justify-around gap-8">
             <button
               type="reset"
               className="w-1/2 rounded bg-red-400 py-2 text-white hover:bg-red-700"

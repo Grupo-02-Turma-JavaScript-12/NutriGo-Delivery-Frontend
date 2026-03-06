@@ -2,19 +2,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import CardProduto from "./components/cardprodutos/CardProduto"
 import { Footer } from "./components/footer/Footer"
-import Navbar from "./components/navbar/Navbar"
+import { Navbar } from "./components/navbar/Navbar"
 import { ScrollToTop } from "./components/ScrollToTop"
 import { AuthProvider } from "./contexts/AuthContext"
 import { Cadastro } from "./pages/Cadastro"
-import { Contato } from "./pages/Contato"
-import Estabelecimentos from "./pages/Estabelecimentos"
+import { Estabelecimentos } from "./pages/Estabelecimentos"
 import { Home } from "./pages/Home"
 import { Login } from "./pages/Login"
-import DeletarPedido from "./pages/pedido/DeletarPedido"
-import FormPedido from "./pages/pedido/FormPedido"
-import ListaPedidos from "./pages/pedido/ListaPedidos"
-import Produtos from "./pages/Produtos"
-import { Sobre } from "./pages/Sobre"
+import { Produtos } from "./pages/Produtos"
+// import { CardProduto } from "./components/cardprodutos/CardProduto"
+import { Perfil } from "./pages/Perfil"
+import { FormProduto } from "./components/formproduto/FormProduto"
 
 export function App() {
   return (
@@ -24,11 +22,14 @@ export function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/perfil" element={<Perfil />} />
           <Route path="/produtos" element={<Produtos />} />
-          <Route path="/cardproduto" element={<CardProduto />} />
+          {/* <Route path="/cardproduto" element={<CardProduto />} /> */}
+          <Route path="/cadastrarproduto" element={<FormProduto />} />
+          <Route path="/editarproduto" element={<FormProduto />} />
           <Route path="/estabelecimentos" element={<Estabelecimentos />} />
           <Route path="/sobre" element={<Sobre />} />
           <Route path="/contato" element={<Contato />} />

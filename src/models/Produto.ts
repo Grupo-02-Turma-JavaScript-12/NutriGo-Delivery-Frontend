@@ -1,16 +1,18 @@
 import type Categoria from "./Categoria"
+import type Estabelecimento from "./Estabelecimento"
 import type Pedido from "./Pedido"
 
 export default interface Produto {
   id: number
   nome: string
-  foto_produto: string
   descricao: string
   preco: number
+  foto_produto: string
   calorias: string
   proteinas: string
-  carboritratos: string
+  carboidratos: string
   gorduras: string
-  categoria?: Categoria
-  pedido?: Pedido
+  categoria?: Categoria | null
+  estabelecimento?: Estabelecimento
+  pedidos?: Pedido[]
 }
