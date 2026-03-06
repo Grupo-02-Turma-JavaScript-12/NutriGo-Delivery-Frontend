@@ -16,13 +16,13 @@ function DeletarPedido() {
   useEffect(() => {
     async function carregar() {
       if (!usuario.token) {
-        ToastAlerta("Voc\u00ea precisa estar logado!", "info")
+        ToastAlerta("Você precisa estar logado!", "info")
         navigate("/login")
         return
       }
 
       if (!id) {
-        ToastAlerta("Pedido n\u00e3o encontrado!", "erro")
+        ToastAlerta("Pedido não encontrado!", "erro")
         navigate("/pedidos")
         return
       }
@@ -31,7 +31,7 @@ function DeletarPedido() {
         await buscarPedidoPorId(Number(id), usuario.token, setPedido)
       } catch (error) {
         console.error(error)
-        ToastAlerta("Pedido n\u00e3o encontrado!", "erro")
+        ToastAlerta("Pedido nãoo encontrado!", "erro")
         navigate("/pedidos")
       }
     }
@@ -43,7 +43,7 @@ function DeletarPedido() {
     if (!id) return
 
     if (!usuario.token) {
-      ToastAlerta("Voc\u00ea precisa estar logado!", "info")
+      ToastAlerta("Você precisa estar logado!", "info")
       navigate("/login")
       return
     }
@@ -64,10 +64,10 @@ function DeletarPedido() {
         <section className="overflow-hidden rounded-3xl border border-rose-100 bg-white shadow-sm">
           <header className="bg-gradient-to-r from-rose-600 to-rose-500 px-6 py-6 text-white sm:px-8">
             <h1 className="mt-2 text-3xl font-black tracking-tight">
-              {"Confirmar exclus\u00e3o"}
+              {"Confirmar exclusão"}
             </h1>
             <p className="mt-2 text-sm text-rose-100">
-              {"Esta a\u00e7\u00e3o remove o pedido permanentemente e n\u00e3o pode ser desfeita."}
+              {"Esta ação remove o pedido permanentemente e não pode ser desfeita."}
             </p>
           </header>
 
