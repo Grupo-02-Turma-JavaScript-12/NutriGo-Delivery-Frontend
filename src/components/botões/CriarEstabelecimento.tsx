@@ -1,11 +1,10 @@
 import { Plus } from "lucide-react"
-import { useContext, useState, useEffect, type ChangeEvent } from "react"
+import { useContext, useEffect, useState, type ChangeEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import { ClipLoader } from "react-spinners"
 import { AuthContext } from "../../contexts/AuthContext"
 import { buscar, cadastrar, deletar } from "../../services/Service"
-import type { ToastAlerta } from "../../util/ToastAlerta"
-import { Estabelecimentos } from "../../pages/Estabelecimentos"
+import { ToastAlerta } from "../../util/ToastAlerta"
 
 function CriarEstabelecimento() {
   const navigate = useNavigate()

@@ -77,11 +77,6 @@ export const Navbar = () => {
               <FaCartPlus size={22} />
             </Link>
           )}
-
-          <Link className="text-green-800 hover:text-yellow-600" to="/Sobre">
-            Sobre
-          </Link>
-
           {usuario.token ? (
             <div className="flex items-center gap-4 border-l border-green-200 pl-4">
               <Link to="/perfil" className="group flex items-center gap-2">

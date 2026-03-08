@@ -1,4 +1,4 @@
-import { Flame, Pencil, Plus, Search, ShoppingCart, Trash2 } from "lucide-react"
+import { Flame, Pencil, Search, ShoppingCart, Trash2 } from "lucide-react"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../contexts/AuthContext"
@@ -8,7 +8,6 @@ import type Produto from "../models/Produto"
 import { buscar, deletar } from "../services/Service"
 import { ToastAlerta } from "../util/ToastAlerta"
 import ProdutoDetalhe from "./ProdutoDetalhe"
-import CriarEstabelecimento from "../components/botões/CriarEstabelecimento"
 
 export function Produtos() {
   const { usuario } = useContext(AuthContext)
@@ -146,17 +145,8 @@ export function Produtos() {
             </h2>
             <div className="ml-2 h-px flex-1 bg-gray-200 sm:hidden"></div>
           </div>
-
-          {usuario.tipo === "ESTABELECIMENTO" && (
-            <button
-              onClick={() => navigate("/cadastrarproduto")}
-              className="flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-6 py-2.5 font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-700 sm:w-auto"
-            >
-              <Plus size={20} /> Cadastrar Produto
-            </button>
-          )}
         </div>
-        <CriarEstabelecimento/>
+
         <div className="mb-6 hidden h-px w-full bg-gray-200 sm:block"></div>
 
         {loading ? (
