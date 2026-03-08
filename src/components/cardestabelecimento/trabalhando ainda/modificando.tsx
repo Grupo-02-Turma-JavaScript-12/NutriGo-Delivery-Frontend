@@ -6,7 +6,6 @@ import { AuthContext } from "../contexts/AuthContext"
 import { atualizar, cadastrar } from "../services/Service"
 import type Usuario from "../models/Usuario"
 import { Plus } from "lucide-react"
-import CriarEstabelecimento from "../components/botões/CriarEstabelecimento"
 
 export function Perfil() {
   const navigate = useNavigate()
@@ -125,7 +124,132 @@ export function Perfil() {
     </div>
   )
 
+  const renderEstabelecimentoPanel = () => (
+    <div className="mt-8 rounded-lg border border-orange-200 bg-orange-50 p-6 shadow-md">
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h3 className="text-2xl font-bold text-orange-800">
+            Meus Estabelecimentos
+          </h3>
+          <p className="mt-2 text-orange-600">
+            Configure sua loja para começar a vender.
+          </p>
+        </div>
+        {!isCadastrandoLoja && (
+          <button
+            onClick={() => setIsCadastrandoLoja(true)}
+            className="flex items-center justify-center gap-2 rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700"
+          >
+            <Plus size={20} />
+            Criar Loja
+          </button>
+        )}
+      </div>
 
+      {isCadastrandoLoja && (
+        <form
+          onSubmit={cadastrarLoja}
+          className="mt-4 border-t border-orange-200 pt-4"
+        >
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-col">
+              <label className="font-bold text-orange-800">Nome da Loja</label>
+              <input
+                type="text"
+                name="nome"
+                value={loja.nome}
+                onChange={atualizarEstadoLoja}
+                className="rounded border border-orange-300 p-2 focus:border-orange-600 focus:outline-none"
+                placeholder="Ex: FitFood"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="font-bold text-orange-800">Categoria</label>
+              <select
+                name="categoria"
+                value={loja.categoria}
+                onChange={atualizarEstadoLoja}
+                className="rounded border border-orange-300 bg-white p-2 focus:border-orange-600 focus:outline-none"
+              >
+                <option value="Saudável">Saudável</option>
+                <option value="Vegano">Vegano</option>
+                <option value="Sem Glúten">Sem Glúten</option>
+                <option value="Lanches Fit">Lanches Fit</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col">
+              <label className="font-bold text-orange-800">
+                Taxa de Entrega (R$)
+              </label>
+              <input
+                type="number"
+                name="taxa_entrega"
+                value={loja.taxa_entrega}
+                onChange={atualizarEstadoLoja}
+                min="0"
+                step="0.10"
+                className="rounded border border-orange-300 p-2 focus:border-orange-600 focus:outline-none"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col sm:col-span-2 lg:col-span-1">
+              <label className="font-bold text-orange-800">
+                Foto do Estabelecimento (URL)
+              </label>
+              <input
+                type="text"
+                name="foto_estabelecimento"
+                value={loja.foto_estabelecimento}
+                onChange={atualizarEstadoLoja}
+                className="rounded border border-orange-300 p-2 focus:border-orange-600 focus:outline-none"
+                placeholder="https://link-da-imagem..."
+                required
+              />
+            </div>
+
+            <div className="flex flex-col sm:col-span-2 lg:col-span-2">
+              <label className="font-bold text-orange-800">
+                Endereço Completo
+              </label>
+              <input
+                type="text"
+                name="endereco"
+                value={loja.endereco}
+                onChange={atualizarEstadoLoja}
+                className="rounded border border-orange-300 p-2 focus:border-orange-600 focus:outline-none"
+                placeholder="Rua Exemplo, 123, Bairro, Paulista - PE"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="mt-4 flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => setIsCadastrandoLoja(false)}
+              className="rounded bg-red-400 px-4 py-2 font-bold text-white hover:bg-red-500"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="flex items-center justify-center rounded bg-green-600 px-6 py-2 font-bold text-white hover:bg-green-700"
+            >
+              {isLoading ? (
+                <ClipLoader color="#ffffff" size={20} />
+              ) : (
+                "Salvar Loja"
+              )}
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
+  )
 
   const renderUsuarioPanel = () => (
     <div className="mt-8 rounded-lg border border-lime-200 bg-lime-50 p-6 shadow-md">
@@ -256,7 +380,7 @@ export function Perfil() {
         ) : (
           <>
             {usuario.tipo === "ADM" && renderAdminPanel()}
-            {usuario.tipo === "ESTABELECIMENTO" && <CriarEstabelecimento/>}
+            {usuario.tipo === "ESTABELECIMENTO" && renderEstabelecimentoPanel()}
             {(!usuario.tipo || usuario.tipo === "USUARIO") &&
               renderUsuarioPanel()}
           </>

@@ -35,6 +35,7 @@ export const buscar = async (
 ) => {
   const resposta = await api.get(url, header)
   setDados(resposta.data)
+  return(resposta.data)
 }
 
 export const cadastrar = async (

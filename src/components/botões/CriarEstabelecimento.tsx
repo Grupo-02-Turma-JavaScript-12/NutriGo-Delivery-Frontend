@@ -3,16 +3,18 @@ import { useContext, useState, useEffect, type ChangeEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import { ClipLoader } from "react-spinners"
 import { AuthContext } from "../../contexts/AuthContext"
-import { cadastrar } from "../../services/Service"
+import { buscar, cadastrar, deletar } from "../../services/Service"
 import type { ToastAlerta } from "../../util/ToastAlerta"
+import { Estabelecimentos } from "../../pages/Estabelecimentos"
 
 function CriarEstabelecimento() {
   const navigate = useNavigate()
 
   const { usuario } = useContext(AuthContext)
-
+  const [estabelecimentoss, setEstabelecimentos] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
+  // useState pra editar loja
+  // const [isEditandoLoja, setIsEditandoLoja] = useState(false)
   const [isCadastrandoLoja, setIsCadastrandoLoja] = useState(false)
   const [loja, setLoja] = useState({
     nome: "",
@@ -66,6 +68,46 @@ function CriarEstabelecimento() {
       ToastAlerta("Erro ao configurar estabelecimento.", "erro")
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  // Buscar estabelecimento-------------------------------------
+  async function BuscarEstabelecimentos() {
+    try {
+      const resposta = await buscar(
+        `/usuarios/${usuario.id}`,
+        setEstabelecimentos,
+        {
+          headers: { Authorization: usuario.token },
+        },
+      )
+
+      // Aqui 'resposta' é o objeto completo do usuário
+      console.log("Usuário completo:", resposta)
+      console.log(resposta.estabelecimento)
+      deletar(`/estabelecimentos/`, resposta.estabelecimento[1].id)
+      // Somente os estabelecimentos
+      // if (resposta.estabelecimento.length > 0)
+      //   console.log("Estabelecimentos:", resposta.estabelecimento)
+      // // Se quiser atualizar o estado apenas com os estabelecimentos:
+      // setEstabelecimentos(resposta.estabelecimento)
+    } catch (error) {
+      console.error("Erro ao buscar estabelecimentos", error)
+    }
+  }
+  async function deletarEstabelecimento() {
+    console.log()
+
+    try {
+      await deletar(
+        `/estabelecimentos/${usuario.estabelecimento[1].id}`,
+
+        {
+          headers: { Authorization: usuario.token },
+        },
+      )
+    } catch (error) {
+      console.error("Erro ao buscar estabelecimentos", error)
     }
   }
 
@@ -173,6 +215,20 @@ function CriarEstabelecimento() {
           </div>
 
           <div className="mt-4 flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => BuscarEstabelecimentos()}
+              className="rounded bg-red-400 px-4 py-2 font-bold text-white hover:bg-red-500"
+            >
+              Buscar Estabelecimentos
+            </button>
+            <button
+              type="button"
+              onClick={() => deletarEstabelecimento()}
+              className="rounded bg-red-400 px-4 py-2 font-bold text-white hover:bg-red-500"
+            >
+              Deletar Estabelecimentos
+            </button>
             <button
               type="button"
               onClick={() => setIsCadastrandoLoja(false)}
