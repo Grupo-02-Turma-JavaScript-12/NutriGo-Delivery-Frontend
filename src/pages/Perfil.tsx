@@ -6,6 +6,8 @@ import { AuthContext } from "../contexts/AuthContext"
 import { atualizar, cadastrar } from "../services/Service"
 import type Usuario from "../models/Usuario"
 import { Plus } from "lucide-react"
+import { Estabelecimentos } from "./Estabelecimentos"
+import CadastrarProdutos from "../components/botões/CadastrarProdutos"
 
 export function Perfil() {
   const navigate = useNavigate()
@@ -129,30 +131,19 @@ export function Perfil() {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h3 className="text-2xl font-bold text-orange-800">
-            Meu Estabelecimento
+            Meus Estabelecimentos
           </h3>
           <p className="mt-2 text-orange-600">
             Configure sua loja para começar a vender.
           </p>
-
-          {/* botao cadastrar produto */}
-          <div>
-            {usuario.tipo === "ESTABELECIMENTO" && (
-              <button
-                onClick={() => navigate("/cadastrarproduto")}
-                className="flex w-full items-center justify-center gap-2 rounded-full bg-orange-600 px-6 py-2.5 font-bold text-white shadow-lg shadow-orange-200 transition hover:bg-orange-700 sm:w-auto"
-              >
-                <Plus size={20} /> Cadastrar Produto
-              </button>
-            )}
-          </div>
         </div>
         {!isCadastrandoLoja && (
           <button
             onClick={() => setIsCadastrandoLoja(true)}
-            className="rounded bg-orange-600 px-4 py-2 font-bold text-white transition hover:bg-orange-700"
+            className="flex items-center justify-center gap-2 rounded bg-green-600 px-4 py-2 font-bold text-white shadow-md transition hover:bg-green-700"
           >
-            Configurar Loja
+            <Plus size={20} />
+            Criar Loja
           </button>
         )}
       </div>
@@ -248,7 +239,7 @@ export function Perfil() {
             </button>
             <button
               type="submit"
-              className="flex items-center justify-center rounded bg-orange-600 px-6 py-2 font-bold text-white hover:bg-orange-700"
+              className="flex items-center justify-center rounded bg-green-600 px-6 py-2 font-bold text-white hover:bg-green-700"
             >
               {isLoading ? (
                 <ClipLoader color="#ffffff" size={20} />
@@ -259,6 +250,13 @@ export function Perfil() {
           </div>
         </form>
       )}
+
+      {/* Estabelecimentos do usuario */}
+      <div className="rounded bg-white p-4">
+        <Estabelecimentos/>
+        
+        <div className="w-full bg-white"></div>
+      </div>
     </div>
   )
 
@@ -396,7 +394,9 @@ export function Perfil() {
               renderUsuarioPanel()}
           </>
         )}
+        <CadastrarProdutos/>
       </div>
+      
     </div>
   )
 }
