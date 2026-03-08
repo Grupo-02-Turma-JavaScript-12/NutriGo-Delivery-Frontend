@@ -15,6 +15,7 @@ import type Estabelecimento from "../models/Estabelecimento"
 import type Usuario from "../models/Usuario"
 import { atualizar, buscar } from "../services/Service"
 import { ToastAlerta } from "../util/ToastAlerta"
+import CriarEstabelecimento from "../components/botões/CriarEstabelecimento"
 
 export function Perfil() {
   const navigate = useNavigate()
@@ -352,7 +353,12 @@ export function Perfil() {
             </div>
           </form>
         ) : (
-          renderUsuarioPanel()
+          <>
+            {/* {usuario.tipo === "ADM" && renderAdminPanel()} */}
+            {usuario.tipo === "ESTABELECIMENTO" && <CriarEstabelecimento/>}
+            {(!usuario.tipo || usuario.tipo === "USUARIO") &&
+              renderUsuarioPanel()}
+          </>
         )}
       </div>
     </div>
