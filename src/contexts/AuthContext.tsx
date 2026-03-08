@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createContext, useState, type ReactNode } from "react"
 import type Usuario from "../models/Usuario"
 import type UsuarioLogin from "../models/UsuarioLogin"
 import { login } from "../services/Service"
 import { ToastAlerta } from "../util/ToastAlerta"
-import type Estabelecimento from "../models/Estabelecimento"
 
 interface UsuarioComToken extends Usuario {
   token: string
@@ -42,7 +42,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function handleLogin(usuarioLogin: UsuarioLogin) {
     setIsLoading(true)
     try {
-      await login(`/auth/logar`, usuarioLogin, setUsuario)
+      await login(`/auth/logar`, usuarioLogin, (resposta: any) => {
+        const dadosTratados = Array.isArray(resposta) ? resposta[0] : resposta
+        setUsuario(dadosTratados)
+      })
       ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")
     } catch (error) {
       ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro")
